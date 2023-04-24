@@ -3,6 +3,7 @@ import { devices } from "src/constants/devices";
 import styled from "styled-components";
 import { BoardValueType } from "src/types/board";
 import { useBoardContext } from "src/hooks/useBoardContext";
+import { Hit, Miss } from "src/assets";
 
 const Tile = styled.div`
   width: calc(95vw / 10);
@@ -18,7 +19,14 @@ const Tile = styled.div`
     height: 60px;
   }
 `;
-
+const HitMark = styled.img`
+  width: 40px;
+  height: 40px;
+`;
+const MissMark = styled.img`
+  width: 40px;
+  height: 40px;
+`;
 type Props = {
   position: number[];
   shipData: BoardValueType;
@@ -34,7 +42,15 @@ const BoardCell: FunctionComponent<Props> = ({ position, shipData }) => {
   return (
     <Tile onClick={handleClick}>
       {" "}
-      {shipData.isFired ? (shipData.ship ? "Hit" : "Miss") : ""}
+      {shipData.isFired ? (
+        shipData.ship ? (
+          <HitMark src={Hit} alt="Hit" />
+        ) : (
+          <MissMark src={Miss} alt="Miss" />
+        )
+      ) : (
+        ""
+      )}
     </Tile>
   );
 };

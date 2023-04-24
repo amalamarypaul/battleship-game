@@ -1,3 +1,4 @@
+import { BattleShip, Carrier, Cruiser, Destroyer, Submarine } from "src/assets";
 const BOARD_SIZE = 10;
 
 const shipTypes = {
@@ -6,6 +7,13 @@ const shipTypes = {
   cruiser: { size: 3, count: 1 },
   submarine: { size: 3, count: 1 },
   destroyer: { size: 2, count: 1 },
+};
+export const shipAssets: { [index: string]: any } = {
+  carrier: Carrier,
+  battleship: BattleShip,
+  cruiser: Cruiser,
+  submarine: Submarine,
+  destroyer: Destroyer,
 };
 const layout = [
   {
