@@ -1,5 +1,5 @@
-import { layout, BOARD_SIZE } from "src/constants/shipsData";
-import { BoardValueType } from "src/types/board";
+import { layout, BOARD_SIZE, shipTypes } from "src/constants/shipsData";
+import { BoardValueType, ResultDataType } from "src/types/board";
 
 //function to get matrix representation of the grid
 export const getBoardData = () => {
@@ -30,4 +30,20 @@ export const getBoardData = () => {
     boardData.push(boardRowData);
   }
   return boardData;
+};
+
+//function to get result data initial state
+export const getInitialResultData = () => {
+  const resultData: ResultDataType[] = [];
+  for (const [key, value] of Object.entries(shipTypes)) {
+    resultData.push({
+      ship: key,
+      isSunk: false,
+      destroyedCount: 0,
+      size: value.size,
+    });
+  }
+  console.log("result inside helper", resultData);
+
+  return resultData;
 };
