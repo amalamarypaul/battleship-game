@@ -1,7 +1,9 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { Board, ResultSection } from "src/components";
 import styled from "styled-components";
 import { devices } from "src/constants/devices";
+import { getBoardData } from "src/helpers/getBoardData";
+import { BoardValueType } from "src/types/board";
 
 const Container = styled.div`
   display: flex;
@@ -16,10 +18,21 @@ const Container = styled.div`
     margin: 20px auto;
   }
 `;
+const boardData = getBoardData();
+
 const Game: FunctionComponent = () => {
+  const [boardValues, setBoardValues] = useState<BoardValueType[][]>(boardData);
+  const handleBoardClick = (
+    updatedValue: BoardValueType,
+    position: number[]
+  ) => {
+    const newBoardValues = boardValues.slice();
+    newBoardValues[position[0]][position[1]] = updatedValue;
+    setBoardValues(newBoardValues);
+  };
   return (
     <Container data-testid="battleship">
-      <Board />
+      <Board boardData={boardValues} handleBoardClick={handleBoardClick} />
       <ResultSection />
     </Container>
   );

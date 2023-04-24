@@ -1,1 +1,1 @@
-export type BoardValues = number[][];
+export type BoardValueType = { isFired: boolean; ship?: string };

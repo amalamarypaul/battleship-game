@@ -1,5 +1,7 @@
+import { FunctionComponent } from "react";
 import { devices } from "src/constants/devices";
 import styled from "styled-components";
+import { BoardValueType } from "src/types/board";
 
 const Tile = styled.div`
   width: calc(95vw / 10);
@@ -15,8 +17,29 @@ const Tile = styled.div`
     height: 60px;
   }
 `;
-const BoardCell = () => {
-  return <Tile> </Tile>;
+
+type Props = {
+  handleBoardClick: (value: BoardValueType, position: number[]) => void;
+  position: number[];
+  shipData: BoardValueType;
+};
+const BoardCell: FunctionComponent<Props> = ({
+  handleBoardClick,
+  position,
+  shipData,
+}) => {
+  const handleClick = () => {
+    if (shipData.isFired) {
+      return;
+    }
+    handleBoardClick({ ...shipData, isFired: true }, position);
+  };
+  return (
+    <Tile onClick={handleClick}>
+      {" "}
+      {shipData.isFired ? (shipData.ship ? "Hit" : "Miss") : ""}
+    </Tile>
+  );
 };
 
 export default BoardCell;

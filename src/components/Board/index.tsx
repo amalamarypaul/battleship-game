@@ -1,6 +1,7 @@
+import { FunctionComponent } from "react";
 import styled from "styled-components";
 
-import { BoardValues } from "src/types/board";
+import { BoardValueType } from "src/types/board";
 import { colors } from "src/constants/colors";
 
 import BoardCell from "./BoardCell";
@@ -22,27 +23,26 @@ const BoardRow = styled.div`
   }
 `;
 
-const boardValues: BoardValues = [
-  [0, 1, 0, 0, 0, 1, 1, 0, 0, 0],
-  [0, 1, 0, 0, 0, 1, 1, 0, 0, 0],
-  [0, 1, 0, 0, 0, 1, 1, 0, 0, 0],
-  [0, 1, 0, 0, 0, 1, 1, 0, 0, 0],
-  [0, 1, 0, 0, 0, 1, 1, 0, 0, 0],
-  [0, 1, 0, 0, 0, 1, 1, 0, 0, 0],
-  [0, 1, 0, 0, 0, 1, 1, 0, 0, 0],
-  [0, 1, 0, 0, 0, 1, 1, 0, 0, 0],
-  [0, 1, 0, 0, 0, 1, 1, 0, 0, 0],
-  [0, 1, 0, 0, 0, 1, 1, 0, 0, 0],
-];
+type Props = {
+  boardData: BoardValueType[][];
+  handleBoardClick: (value: BoardValueType, position: number[]) => void;
+};
 
-const Board = () => {
+const Board: FunctionComponent<Props> = ({ boardData, handleBoardClick }) => {
   return (
     <Container>
-      {boardValues.map((rowValue, rowIndex) => {
+      {boardData.map((rowValue, rowIndex) => {
         return (
           <BoardRow key={`row-${rowIndex}`}>
             {rowValue.map((colValue, colIndex) => {
-              return <BoardCell key={`col-${rowIndex}${colIndex}`}></BoardCell>;
+              return (
+                <BoardCell
+                  key={`col-${rowIndex}${colIndex}`}
+                  shipData={colValue}
+                  handleBoardClick={handleBoardClick}
+                  position={[rowIndex, colIndex]}
+                ></BoardCell>
+              );
             })}
           </BoardRow>
         );
