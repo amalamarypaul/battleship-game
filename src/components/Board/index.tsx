@@ -9,15 +9,15 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
   margin: 0 auto;
+  border: 4px solid rgb(255, 177, 0);
+  max-width: 610px;
 `;
 const BoardRow = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-
-  &:not(:last-child) {
+  &:last-child {
     border-bottom: 1px solid black;
   }
 `;
@@ -34,6 +34,7 @@ const boardValues: BoardValues = [
   [0, 1, 0, 0, 0, 1, 1, 0, 0, 0],
   [0, 1, 0, 0, 0, 1, 1, 0, 0, 0],
 ];
+
 const Board = () => {
   return (
     <Container>
