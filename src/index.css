@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.App {
+  text-align: center;
+}
+footer{
+  position: absolute;
+  bottom: 0;
+  margin:5px 42%;
+  
+}
+footer a {
+  color: black;
+  font-size: 10px;
+}

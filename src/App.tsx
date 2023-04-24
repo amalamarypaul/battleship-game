@@ -1,15 +1,19 @@
-import "./App.css";
+import { Board } from "./components";
+import styled from "styled-components";
 
+const Container = styled.div`
+  margin: 20px;
+`;
 function App() {
   return (
-    <div className="App">
-      Battleship game
+    <Container>
+      <Board />
       <footer>
         <a href="https://www.flaticon.com/free-icons/ship" title="ship icons">
           Ship icons created by Freepik - Flaticon
         </a>
       </footer>
-    </div>
+    </Container>
   );
 }
 
