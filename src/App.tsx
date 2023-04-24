@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Game from "./pages/Game";
+
 const Container = styled.div`
   margin: 20px;
 `;

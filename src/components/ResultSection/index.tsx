@@ -9,11 +9,14 @@ import { devices } from "src/constants/devices";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+
   @media (${devices.tablet}) {
     flex-direction: row;
   }
   @media (${devices.laptop}) {
     flex-direction: column;
+    max-width: 300px;
   }
 `;
 const ResultSection: FunctionComponent = () => {

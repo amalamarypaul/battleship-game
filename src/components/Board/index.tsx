@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { BoardValues } from "src/types/board";
+import { colors } from "src/constants/colors";
 
 import BoardCell from "./BoardCell";
 
@@ -9,8 +10,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0 auto;
-  border: 4px solid rgb(255, 177, 0);
+  border: 4px solid ${colors.primaryColor};
   max-width: 610px;
 `;
 const BoardRow = styled.div`
