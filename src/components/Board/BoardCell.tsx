@@ -2,6 +2,7 @@ import { FunctionComponent } from "react";
 import { devices } from "src/constants/devices";
 import styled from "styled-components";
 import { BoardValueType } from "src/types/board";
+import { useBoardContext } from "src/hooks/useBoardContext";
 
 const Tile = styled.div`
   width: calc(95vw / 10);
@@ -19,15 +20,11 @@ const Tile = styled.div`
 `;
 
 type Props = {
-  handleBoardClick: (value: BoardValueType, position: number[]) => void;
   position: number[];
   shipData: BoardValueType;
 };
-const BoardCell: FunctionComponent<Props> = ({
-  handleBoardClick,
-  position,
-  shipData,
-}) => {
+const BoardCell: FunctionComponent<Props> = ({ position, shipData }) => {
+  const { handleBoardClick } = useBoardContext();
   const handleClick = () => {
     if (shipData.isFired) {
       return;

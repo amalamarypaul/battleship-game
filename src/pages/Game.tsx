@@ -1,9 +1,13 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useState, createContext } from "react";
 import { Board, ResultSection } from "src/components";
 import styled from "styled-components";
 import { devices } from "src/constants/devices";
 import { getBoardData, getInitialResultData } from "src/helpers/getBoardData";
-import { BoardValueType, ResultDataType } from "src/types/board";
+import {
+  BoardValueType,
+  BoardContextType,
+  ResultDataType,
+} from "src/types/board";
 
 const Container = styled.div`
   display: flex;
@@ -21,6 +25,7 @@ const Container = styled.div`
 const boardData = getBoardData();
 const initialResultData = getInitialResultData();
 
+export const BoardContext = createContext<BoardContextType | null>(null);
 const Game: FunctionComponent = () => {
   const [boardValues, setBoardValues] = useState<BoardValueType[][]>(boardData);
   const [resultData, setResultData] =
@@ -55,10 +60,14 @@ const Game: FunctionComponent = () => {
     }
   };
   return (
-    <Container data-testid="battleship">
-      <Board boardData={boardValues} handleBoardClick={handleBoardClick} />
-      <ResultSection />
-    </Container>
+    <BoardContext.Provider
+      value={{ boardValues, resultData, handleBoardClick }}
+    >
+      <Container data-testid="battleship">
+        <Board boardData={boardValues} />
+        <ResultSection />
+      </Container>
+    </BoardContext.Provider>
   );
 };
 

@@ -5,3 +5,8 @@ export type ResultDataType = {
   destroyedCount: number;
   size: number;
 };
+export type BoardContextType = {
+  boardValues: BoardValueType[][];
+  resultData: ResultDataType[];
+  handleBoardClick: (value: BoardValueType, position: number[]) => void;
+};

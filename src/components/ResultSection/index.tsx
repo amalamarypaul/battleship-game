@@ -19,6 +19,7 @@ const Container = styled.div`
     max-width: 300px;
   }
 `;
+
 const ResultSection: FunctionComponent = () => {
   return (
     <Container>

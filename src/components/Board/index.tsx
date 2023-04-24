@@ -25,10 +25,9 @@ const BoardRow = styled.div`
 
 type Props = {
   boardData: BoardValueType[][];
-  handleBoardClick: (value: BoardValueType, position: number[]) => void;
 };
 
-const Board: FunctionComponent<Props> = ({ boardData, handleBoardClick }) => {
+const Board: FunctionComponent<Props> = ({ boardData }) => {
   return (
     <Container>
       {boardData.map((rowValue, rowIndex) => {
@@ -39,7 +38,6 @@ const Board: FunctionComponent<Props> = ({ boardData, handleBoardClick }) => {
                 <BoardCell
                   key={`col-${rowIndex}${colIndex}`}
                   shipData={colValue}
-                  handleBoardClick={handleBoardClick}
                   position={[rowIndex, colIndex]}
                 ></BoardCell>
               );
