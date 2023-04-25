@@ -38,6 +38,7 @@ const Game: FunctionComponent = () => {
     useState<BoardValueType[][]>(initialBoardData);
   const [resultData, setResultData] =
     useState<ResultDataType[]>(initialResultData);
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     if (resultData.every((resultItem) => resultItem.isSunk)) {
@@ -49,9 +50,10 @@ const Game: FunctionComponent = () => {
 
   const handleGameCompletion = () => {
     //TODO: change completion state more attractive
-    alert("You won!!!!!");
+    alert(`You won!!!!! Your score is ${score}`);
     setBoardValues(initialBoardData);
     setResultData(initialResultData);
+    setScore(0);
   };
 
   const handleResultDataUpdate = (shipName: string) => {
@@ -71,6 +73,23 @@ const Game: FunctionComponent = () => {
     }
   };
 
+  const handleUpdateScore = (isHit: boolean) => {
+    let updatedScore = score;
+    /*
+    Score system
+     - Add 30 points to on every hit
+     - Substract 5 points on every miss
+     - Score can be negative value
+    */
+
+    if (isHit) {
+      updatedScore = updatedScore + 30;
+    } else {
+      updatedScore = updatedScore - 5;
+    }
+    setScore(updatedScore);
+  };
+
   const handleBoardClick = (
     updatedValue: BoardValueType,
     position: number[]
@@ -80,7 +99,7 @@ const Game: FunctionComponent = () => {
     const newBoardValues = boardValues.map((row) => row.slice());
     newBoardValues[position[0]][position[1]] = updatedValue;
     setBoardValues(newBoardValues);
-
+    handleUpdateScore(updatedValue.ship ? true : false);
     if (updatedValue.ship) {
       // Update destroyed status in the result of the hit position occupied by ship
       handleResultDataUpdate(updatedValue.ship);
@@ -89,7 +108,7 @@ const Game: FunctionComponent = () => {
 
   return (
     <BoardContext.Provider
-      value={{ boardValues, resultData, handleBoardClick }}
+      value={{ boardValues, resultData, handleBoardClick, playerScore: score }}
     >
       <Container data-testid="battleship">
         <Board boardData={boardValues} />

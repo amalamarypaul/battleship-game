@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import ScoreCard from "./ScoreCard";
 import { colors } from "src/constants/colors";
+import { useBoardContext } from "src/hooks/useBoardContext";
 
 const Container = styled.div`
   display: flex;
@@ -14,10 +15,11 @@ const Container = styled.div`
 `;
 
 const ScoreSection: FunctionComponent = () => {
+  const { playerScore } = useBoardContext();
   return (
     <Container>
       <ScoreCard
-        score={"00"}
+        score={playerScore || "00"}
         playerName="Player 1"
         backgroundColor={colors.primaryColor}
       />
