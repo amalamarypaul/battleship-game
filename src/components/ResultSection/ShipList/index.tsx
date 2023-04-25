@@ -19,7 +19,7 @@ const ShipList: FunctionComponent = () => {
             size={resultItem.size}
             isSunk={resultItem.isSunk}
             shipName={resultItem.ship}
-            key={resultItem.ship}
+            key={resultItem.ship + index}
           />
         );
       })}

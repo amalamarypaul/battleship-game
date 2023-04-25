@@ -1,4 +1,4 @@
-import { FunctionComponent, useState, createContext } from "react";
+import { FunctionComponent, useState, createContext, useEffect } from "react";
 import { Board, ResultSection } from "src/components";
 import styled from "styled-components";
 import { devices } from "src/constants/devices";
@@ -22,43 +22,64 @@ const Container = styled.div`
     margin: 20px auto;
   }
 `;
-const boardData = getBoardData();
+const initialBoardData = getBoardData();
 const initialResultData = getInitialResultData();
 
 export const BoardContext = createContext<BoardContextType | null>(null);
 const Game: FunctionComponent = () => {
-  const [boardValues, setBoardValues] = useState<BoardValueType[][]>(boardData);
+  const [boardValues, setBoardValues] =
+    useState<BoardValueType[][]>(initialBoardData);
   const [resultData, setResultData] =
     useState<ResultDataType[]>(initialResultData);
+
+  useEffect(() => {
+    if (resultData.every((resultItem) => resultItem.isSunk)) {
+      setTimeout(() => {
+        handleGameCompletion();
+      }, 300);
+    }
+  }, [resultData]);
+
+  const handleGameCompletion = () => {
+    //TODO: change completion state more attractive
+    alert("You won!!!!!");
+    setBoardValues(initialBoardData);
+    setResultData(initialResultData);
+  };
+
+  const handleResultDataUpdate = (shipName: string) => {
+    const shipData = resultData.find((shipInfo) => shipInfo.ship === shipName);
+    if (shipData) {
+      const newDestroyedCount = shipData.destroyedCount + 1;
+      //isSunk is a variable value set to true if the a ship completely destroyed
+      const isSunk = newDestroyedCount === shipData.size;
+      const newResult = resultData.map((item) => {
+        if (item.ship === shipData.ship) {
+          return { ...item, destroyedCount: newDestroyedCount, isSunk };
+        }
+        return item;
+      });
+
+      setResultData(newResult);
+    }
+  };
 
   const handleBoardClick = (
     updatedValue: BoardValueType,
     position: number[]
   ) => {
-    const newBoardValues = boardValues.slice();
+    // to get deep copy of board values -two level, map create a new array of first level
+    // slice will make new array of each next level array.
+    const newBoardValues = boardValues.map((row) => row.slice());
     newBoardValues[position[0]][position[1]] = updatedValue;
     setBoardValues(newBoardValues);
 
     if (updatedValue.ship) {
       // Update destroyed status in the result of the hit position occupied by ship
-      const shipData = resultData.find(
-        (shipInfo) => shipInfo.ship === updatedValue.ship
-      );
-      if (shipData) {
-        const newDestroyedCount = shipData.destroyedCount + 1;
-        //isSunk is a variable value set to true if the a ship completely destroyed
-        const isSunk = newDestroyedCount === shipData.size;
-        const newResult = resultData.map((item) => {
-          if (item.ship === shipData.ship) {
-            return { ...item, destroyedCount: newDestroyedCount, isSunk };
-          }
-          return item;
-        });
-
-        setResultData(newResult);
-      }
+      handleResultDataUpdate(updatedValue.ship);
     }
   };
+
   return (
     <BoardContext.Provider
       value={{ boardValues, resultData, handleBoardClick }}

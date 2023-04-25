@@ -43,7 +43,6 @@ export const getInitialResultData = () => {
       size: value.size,
     });
   }
-  console.log("result inside helper", resultData);
 
   return resultData;
 };
