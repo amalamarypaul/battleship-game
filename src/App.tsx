@@ -1,13 +1,20 @@
+import { useState } from "react";
 import styled from "styled-components";
-import Game from "./pages/Game";
+import { Game, StartPage } from "./pages";
 
 const Container = styled.div`
   margin: 20px;
 `;
 function App() {
+  const [showStartPage, setShowStartPage] = useState(true);
   return (
     <Container>
-      <Game />
+      {showStartPage ? (
+        <StartPage onClickStart={() => setShowStartPage(false)}></StartPage>
+      ) : (
+        <Game onClickCancel={() => setShowStartPage(true)} />
+      )}
+
       <footer>
         <a href="https://www.flaticon.com/free-icons/ship" title="ship icons">
           Ship icons created by Freepik - Flaticon

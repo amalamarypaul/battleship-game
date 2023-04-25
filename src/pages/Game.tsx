@@ -1,4 +1,4 @@
-import { FunctionComponent, useState, createContext, useEffect } from "react";
+import { FunctionComponent, useState, createContext } from "react";
 import { Board, Modal, ResultSection } from "src/components";
 import styled from "styled-components";
 import { devices } from "src/constants/devices";
@@ -33,7 +33,10 @@ const randomInitailLayout = getBoardDataWithRandomLayout();
 
 export const BoardContext = createContext<BoardContextType | null>(null);
 
-const Game: FunctionComponent = () => {
+type Props = {
+  onClickCancel: () => void;
+};
+const Game: FunctionComponent<Props> = ({ onClickCancel }) => {
   const [boardValues, setBoardValues] =
     useState<BoardValueType[][]>(initialBoardData);
   const [resultData, setResultData] =
@@ -107,6 +110,7 @@ const Game: FunctionComponent = () => {
           <Modal
             okClick={handleGameCompletion}
             description={`Score: ${score}`}
+            cancelClick={onClickCancel}
           />
         ) : null}
       </Container>
