@@ -10,6 +10,7 @@ import Hit from "./hit.png";
 import Miss from "./miss.png";
 import HitSmall from "./hit-small.png";
 import MissSmall from "./miss-small.png";
+import BackgroundBattleship from "./battleship-background.jpeg";
 
 export {
   BattleShip,
@@ -21,4 +22,5 @@ export {
   HitSmall,
   Miss,
   MissSmall,
+  BackgroundBattleship,
 };

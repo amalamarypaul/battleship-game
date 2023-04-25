@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { Game, StartPage } from "./pages";
 import { devices } from "./constants/devices";
 
-const Container = styled.div`
+const Container = styled.div<{ $shouldMargin?: boolean }>`
   @media (${devices.tablet}) {
-    margin: 20px;
+    margin: ${(props) => (props.$shouldMargin ? "20px" : 0)};
   }
   @media (${devices.laptop}) {
     margin: 0px;
@@ -14,7 +14,7 @@ const Container = styled.div`
 function App() {
   const [showStartPage, setShowStartPage] = useState(true);
   return (
-    <Container>
+    <Container $shouldMargin={!showStartPage}>
       {showStartPage ? (
         <StartPage onClickStart={() => setShowStartPage(false)}></StartPage>
       ) : (

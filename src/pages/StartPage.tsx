@@ -1,4 +1,6 @@
 import { FunctionComponent } from "react";
+import { BackgroundBattleship } from "src/assets";
+import { devices } from "src/constants/devices";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -9,23 +11,29 @@ const Container = styled.div`
   background-color: white;
   justify-content: center;
   align-items: center;
+  background: url(${BackgroundBattleship});
+  background-size: cover;
+  gap: 30px;
 `;
 
 const Title = styled.h2`
   font-size: 40px;
-  color: brown;
+  color: #ffa500;
 `;
 const StartButton = styled.button`
-  width: 30%;
+  width: 90%;
   padding: 10px;
   margin-bottom: 20px;
-  background-color: green;
+  background-color: #1666ee;
   border: none;
   border-radius: 5px;
   color: white;
   font-weight: bold;
   cursor: pointer;
   font-size: 30px;
+  @media (${devices.tablet}) {
+    width: 30%;
+  }
 `;
 
 type Props = {

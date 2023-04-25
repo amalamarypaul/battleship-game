@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
 import { colors } from "src/constants/colors";
 import styled from "styled-components";
+import { devices } from "src/constants/devices";
 
 const Container = styled.div`
   z-index: 1;
@@ -11,21 +12,26 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  top: 0;
+  left: 0;
 `;
 
 const Content = styled.div`
   background-color: rgba(255, 255, 255, 1);
-  width: 60%;
+  width: 80%;
   height: 60%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   border-radius: 5px;
+  @media (${devices.tablet}) {
+    width: 60%;
+  }
 `;
 const Title = styled.h3`
   font-size: 38px;
-  color: blue;
+  color: brown;
 `;
 const Description = styled.p`
   font-size: 28px;
@@ -41,6 +47,7 @@ const OkButton = styled.button`
   color: white;
   font-weight: bold;
   cursor: pointer;
+  font-size: 20px;
 `;
 const CancelButton = styled.button`
   background-color: white;
@@ -68,7 +75,7 @@ const Modal: FunctionComponent<Props> = ({
   return (
     <Container>
       <Content>
-        <Title>{title || "You Won!!"}</Title>
+        <Title>{title || "You Won !! 🥳"}</Title>
         <Description>{description || ""} </Description>
         <OkButton onClick={okClick}>{okText || "Play Again"}</OkButton>
         <CancelButton onClick={cancelClick}>
