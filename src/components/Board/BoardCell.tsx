@@ -6,6 +6,9 @@ import { useBoardContext } from "src/hooks/useBoardContext";
 import { Hit, Miss } from "src/assets";
 
 const Tile = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: calc(95vw / 10);
   height: calc(95vw / 10);
   cursor: pointer;
