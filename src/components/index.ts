@@ -1,4 +1,5 @@
 import Board from "./Board";
+import Modal from "./Modal";
 import ResultSection from "./ResultSection";
 
-export { Board, ResultSection };
+export { Board, Modal, ResultSection };

@@ -1,5 +1,5 @@
 import { FunctionComponent, useState, createContext, useEffect } from "react";
-import { Board, ResultSection } from "src/components";
+import { Board, Modal, ResultSection } from "src/components";
 import styled from "styled-components";
 import { devices } from "src/constants/devices";
 import {
@@ -40,17 +40,7 @@ const Game: FunctionComponent = () => {
     useState<ResultDataType[]>(initialResultData);
   const [score, setScore] = useState(0);
 
-  useEffect(() => {
-    if (resultData.every((resultItem) => resultItem.isSunk)) {
-      setTimeout(() => {
-        handleGameCompletion();
-      }, 300);
-    }
-  }, [resultData]);
-
   const handleGameCompletion = () => {
-    //TODO: change completion state more attractive
-    alert(`You won!!!!! Your score is ${score}`);
     setBoardValues(initialBoardData);
     setResultData(initialResultData);
     setScore(0);
@@ -113,6 +103,12 @@ const Game: FunctionComponent = () => {
       <Container data-testid="battleship">
         <Board boardData={boardValues} />
         <ResultSection />
+        {resultData.every((resultItem) => resultItem.isSunk) ? (
+          <Modal
+            okClick={handleGameCompletion}
+            description={`Score: ${score}`}
+          />
+        ) : null}
       </Container>
     </BoardContext.Provider>
   );
