@@ -20,12 +20,6 @@ function App() {
       ) : (
         <Game onClickCancel={() => setShowStartPage(true)} />
       )}
-
-      <footer>
-        <a href="https://www.flaticon.com/free-icons/ship" title="ship icons">
-          Ship icons created by Freepik - Flaticon
-        </a>
-      </footer>
     </Container>
   );
 }
