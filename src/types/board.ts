@@ -10,3 +10,4 @@ export type BoardContextType = {
   resultData: ResultDataType[];
   handleBoardClick: (value: BoardValueType, position: number[]) => void;
 };
+export type ShipType = { name: string; size: number };

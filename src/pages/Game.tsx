@@ -2,7 +2,11 @@ import { FunctionComponent, useState, createContext, useEffect } from "react";
 import { Board, ResultSection } from "src/components";
 import styled from "styled-components";
 import { devices } from "src/constants/devices";
-import { getBoardData, getInitialResultData } from "src/helpers/getBoardData";
+import {
+  getBoardData,
+  getBoardDataWithRandomLayout,
+  getInitialResultData,
+} from "src/helpers/getBoardData";
 import {
   BoardValueType,
   BoardContextType,
@@ -24,8 +28,11 @@ const Container = styled.div`
 `;
 const initialBoardData = getBoardData();
 const initialResultData = getInitialResultData();
+//TODO: use random board data to final stage
+const randomInitailLayout = getBoardDataWithRandomLayout();
 
 export const BoardContext = createContext<BoardContextType | null>(null);
+
 const Game: FunctionComponent = () => {
   const [boardValues, setBoardValues] =
     useState<BoardValueType[][]>(initialBoardData);
