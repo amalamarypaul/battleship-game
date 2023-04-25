@@ -10,19 +10,25 @@ const Container = styled.div`
   gap: 20px;
 `;
 const Ship = styled.img`
-  width: 65px;
+  width: 60px;
   height: 100%;
+  @media (${devices.mobile}) {
+    width: 65px;
+  }
   @media (${devices.tablet}) {
     width: 80px;
-    height: 100%;
   }
 `;
 const SizeContainer = styled.div`
   display: flex;
 `;
 const SunkStatus = styled.img`
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
+  @media (${devices.mobile}) {
+    width: 12px;
+    height: 12px;
+  }
   @media (${devices.tablet}) {
     width: 20px;
     height: 20px;

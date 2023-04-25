@@ -18,12 +18,15 @@ const Container = styled.div`
 
 const Content = styled.div`
   background-color: rgba(255, 255, 255, 1);
-  width: 80%;
+  width: 95%;
   height: 60%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  @media (${devices.mobile}) {
+    width: 80%;
+  }
   border-radius: 5px;
   @media (${devices.tablet}) {
     width: 60%;
@@ -38,7 +41,7 @@ const Description = styled.p`
   color: ${colors.primaryColor};
 `;
 const OkButton = styled.button`
-  width: 30%;
+  width: 35%;
   padding: 10px;
   margin-bottom: 20px;
   background-color: green;
@@ -47,7 +50,10 @@ const OkButton = styled.button`
   color: white;
   font-weight: bold;
   cursor: pointer;
-  font-size: 20px;
+  @media (${devices.tablet}) {
+    width: 40%;
+    font-size: 20px;
+  }
 `;
 const CancelButton = styled.button`
   background-color: white;
