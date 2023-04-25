@@ -3,10 +3,23 @@ import { FunctionComponent } from "react";
 import styled from "styled-components";
 import { useBoardContext } from "src/hooks/useBoardContext";
 import ShipItem from "./ShipItem";
+import { devices } from "src/constants/devices";
 
 const Container = styled.div`
-  margin-top: 30px;
-  gap: 40px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 15px 10px;
+  gap: 10px;
+  max-height: 80px;
+  @media (${devices.tablet}) {
+    padding: 0px;
+    max-height: 100px;
+  }
+  @media (${devices.laptop}) {
+    max-height: unset;
+    margin-top: 30px;
+  }
 `;
 
 const ShipList: FunctionComponent = () => {

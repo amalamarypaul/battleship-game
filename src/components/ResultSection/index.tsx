@@ -9,14 +9,17 @@ import { devices } from "src/constants/devices";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
 
   @media (${devices.tablet}) {
+    gap: 40px;
     flex-direction: row;
+    margin-top: 30px;
   }
   @media (${devices.laptop}) {
+    gap: 0;
     flex-direction: column;
     max-width: 300px;
+    margin-top: 0px;
   }
 `;
 

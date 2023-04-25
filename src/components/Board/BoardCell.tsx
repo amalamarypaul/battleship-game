@@ -9,8 +9,8 @@ const Tile = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: calc(95vw / 10);
-  height: calc(95vw / 10);
+  width: calc(100vw / 10);
+  height: calc(100vw / 10);
   cursor: pointer;
   border-left: 1px solid black;
   border-top: 1px solid black;
@@ -23,12 +23,20 @@ const Tile = styled.div`
   }
 `;
 const HitMark = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 20px;
+  height: 20px;
+  @media (${devices.tablet}) {
+    width: 40px;
+    height: 40px;
+  }
 `;
 const MissMark = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 20px;
+  height: 20px;
+  @media (${devices.tablet}) {
+    width: 40px;
+    height: 40px;
+  }
 `;
 type Props = {
   position: number[];

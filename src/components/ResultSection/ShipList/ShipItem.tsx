@@ -2,6 +2,7 @@ import { FunctionComponent } from "react";
 import styled from "styled-components";
 import { shipAssets } from "src/constants/shipsData";
 import { HitSmall, MissSmall } from "src/assets";
+import { devices } from "src/constants/devices";
 
 const Container = styled.div`
   display: flex;
@@ -9,12 +10,23 @@ const Container = styled.div`
   gap: 20px;
 `;
 const Ship = styled.img`
-  width: 80px;
+  width: 65px;
   height: 100%;
+  @media (${devices.tablet}) {
+    width: 80px;
+    height: 100%;
+  }
 `;
-const SizeContainer = styled.div``;
-const ShunkStatus = styled.img`
-  width: 20px;
+const SizeContainer = styled.div`
+  display: flex;
+`;
+const SunkStatus = styled.img`
+  width: 12px;
+  height: 12px;
+  @media (${devices.tablet}) {
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 type Props = {
@@ -32,11 +44,11 @@ const ShipItem: FunctionComponent<Props> = ({ isSunk, size, shipName }) => {
           .fill(0)
           .map((item, index) => {
             return (
-              <ShunkStatus
+              <SunkStatus
                 key={item + index + shipName}
                 src={isSunk ? HitSmall : MissSmall}
                 alt={isSunk ? "HitSmall" : "MissSmall"}
-              ></ShunkStatus>
+              ></SunkStatus>
             );
           })}
       </SizeContainer>

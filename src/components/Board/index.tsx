@@ -11,8 +11,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 4px solid ${colors.primaryColor};
-  max-width: 610px;
+  border: 8px solid ${colors.primaryColor};
 `;
 const BoardRow = styled.div`
   display: flex;

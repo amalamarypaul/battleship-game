@@ -1,9 +1,15 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { Game, StartPage } from "./pages";
+import { devices } from "./constants/devices";
 
 const Container = styled.div`
-  margin: 20px;
+  @media (${devices.tablet}) {
+    margin: 20px;
+  }
+  @media (${devices.laptop}) {
+    margin: 0px;
+  }
 `;
 function App() {
   const [showStartPage, setShowStartPage] = useState(true);
