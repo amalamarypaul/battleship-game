@@ -1,9 +1,9 @@
 // Component to show ships list with sink status
 import { FunctionComponent } from "react";
 import styled from "styled-components";
-import { useBoardContext } from "src/hooks/useBoardContext";
 import ShipItem from "./ShipItem";
 import { devices } from "src/constants/devices";
+import { ResultDataType } from "src/types/board";
 
 const Container = styled.div`
   display: flex;
@@ -21,18 +21,19 @@ const Container = styled.div`
     margin-top: 30px;
   }
 `;
-
-const ShipList: FunctionComponent = () => {
-  const { resultData } = useBoardContext();
+type Props = {
+  shipData: ResultDataType[];
+};
+const ShipList: FunctionComponent<Props> = ({ shipData }) => {
   return (
     <Container>
-      {resultData.map((resultItem, index) => {
+      {shipData.map((shipItem, index) => {
         return (
           <ShipItem
-            size={resultItem.size}
-            isSunk={resultItem.isSunk}
-            shipName={resultItem.ship}
-            key={resultItem.ship + index}
+            size={shipItem.size}
+            isSunk={shipItem.isSunk}
+            shipName={shipItem.ship}
+            key={shipItem.ship + index}
           />
         );
       })}

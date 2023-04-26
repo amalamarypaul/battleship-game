@@ -1,6 +1,6 @@
 # Battleship
 
-Battleship is a mobile-ready, partial Battleship game as a web app build using react
+Battleship is a mobile-ready, partial Battleship game as a web app built using react
 
 ## Installation
 

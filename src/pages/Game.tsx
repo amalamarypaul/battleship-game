@@ -1,4 +1,10 @@
-import { FunctionComponent, useState, createContext } from "react";
+import {
+  FunctionComponent,
+  useState,
+  createContext,
+  useMemo,
+  useCallback,
+} from "react";
 import { Board, Modal, ResultSection } from "src/components";
 import styled from "styled-components";
 import { devices } from "src/constants/devices";
@@ -49,60 +55,71 @@ const Game: FunctionComponent<Props> = ({ onClickCancel }) => {
     setScore(0);
   };
 
-  const handleResultDataUpdate = (shipName: string) => {
-    const shipData = resultData.find((shipInfo) => shipInfo.ship === shipName);
-    if (shipData) {
-      const newDestroyedCount = shipData.destroyedCount + 1;
-      //isSunk is a variable value set to true if the a ship completely destroyed
-      const isSunk = newDestroyedCount === shipData.size;
-      const newResult = resultData.map((item) => {
-        if (item.ship === shipData.ship) {
-          return { ...item, destroyedCount: newDestroyedCount, isSunk };
-        }
-        return item;
-      });
+  const handleResultDataUpdate = useCallback(
+    (shipName: string) => {
+      const shipData = resultData.find(
+        (shipInfo) => shipInfo.ship === shipName
+      );
+      if (shipData) {
+        const newDestroyedCount = shipData.destroyedCount + 1;
+        //isSunk is a variable value set to true if the a ship completely destroyed
+        const isSunk = newDestroyedCount === shipData.size;
+        const newResult = resultData.map((item) => {
+          if (item.ship === shipData.ship) {
+            return { ...item, destroyedCount: newDestroyedCount, isSunk };
+          }
+          return item;
+        });
 
-      setResultData(newResult);
-    }
-  };
+        setResultData(newResult);
+      }
+    },
+    [resultData]
+  );
 
-  const handleUpdateScore = (isHit: boolean) => {
-    let updatedScore = score;
-    /*
+  const handleUpdateScore = useCallback(
+    (isHit: boolean) => {
+      let updatedScore = score;
+      /*
     Score system
      - Add 30 points to on every hit
      - Substract 5 points on every miss
      - Score can be negative value
     */
 
-    if (isHit) {
-      updatedScore = updatedScore + 30;
-    } else {
-      updatedScore = updatedScore - 5;
-    }
-    setScore(updatedScore);
-  };
+      if (isHit) {
+        updatedScore = updatedScore + 30;
+      } else {
+        updatedScore = updatedScore - 5;
+      }
+      setScore(updatedScore);
+    },
+    [score]
+  );
 
-  const handleBoardClick = (
-    updatedValue: BoardValueType,
-    position: number[]
-  ) => {
-    // to get deep copy of board values -two level, map create a new array of first level
-    // slice will make new array of each next level array.
-    const newBoardValues = boardValues.map((row) => row.slice());
-    newBoardValues[position[0]][position[1]] = updatedValue;
-    setBoardValues(newBoardValues);
-    handleUpdateScore(updatedValue.ship ? true : false);
-    if (updatedValue.ship) {
-      // Update destroyed status in the result of the hit position occupied by ship
-      handleResultDataUpdate(updatedValue.ship);
-    }
-  };
+  const handleBoardClick = useCallback(
+    (updatedValue: BoardValueType, position: number[]) => {
+      // to get deep copy of board values -two level, map create a new array of first level
+      // slice will make new array of each next level array.
+      const newBoardValues = boardValues.map((row) => row.slice());
+      newBoardValues[position[0]][position[1]] = updatedValue;
+      setBoardValues(newBoardValues);
+      handleUpdateScore(updatedValue.ship ? true : false);
+      if (updatedValue.ship) {
+        // Update destroyed status in the result of the hit position occupied by ship
+        handleResultDataUpdate(updatedValue.ship);
+      }
+    },
+    [boardValues, handleResultDataUpdate, handleUpdateScore]
+  );
+
+  const boardContextValues = useMemo(
+    () => ({ boardValues, resultData, handleBoardClick, playerScore: score }),
+    [boardValues, resultData, handleBoardClick, score]
+  );
 
   return (
-    <BoardContext.Provider
-      value={{ boardValues, resultData, handleBoardClick, playerScore: score }}
-    >
+    <BoardContext.Provider value={boardContextValues}>
       <Container data-testid="battleship">
         <Board boardData={boardValues} />
         <ResultSection />
