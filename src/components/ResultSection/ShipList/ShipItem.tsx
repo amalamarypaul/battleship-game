@@ -42,9 +42,11 @@ type Props = {
 };
 
 const ShipItem: FunctionComponent<Props> = ({ isSunk, size, shipName }) => {
+  //to get the base ship name by removing ship number
+  const baseShipName = shipName.replace(/\d/g, "");
   return (
     <Container>
-      <Ship src={shipAssets[shipName]} alt={shipName}></Ship>
+      <Ship src={shipAssets[baseShipName]} alt={baseShipName}></Ship>
       <SizeContainer>
         {Array(size)
           .fill(0)

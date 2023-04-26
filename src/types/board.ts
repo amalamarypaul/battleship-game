@@ -12,3 +12,6 @@ export type BoardContextType = {
   handleBoardClick: (value: BoardValueType, position: number[]) => void;
 };
 export type ShipType = { name: string; size: number };
+export type Ships = {
+  [key: string]: { size: number; count: number };
+};

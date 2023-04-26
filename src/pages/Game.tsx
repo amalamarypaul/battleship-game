@@ -9,7 +9,6 @@ import { Board, Modal, ResultSection } from "src/components";
 import styled from "styled-components";
 import { devices } from "src/constants/devices";
 import {
-  getBoardData,
   getBoardDataWithRandomLayout,
   getInitialResultData,
 } from "src/helpers/getBoardData";
@@ -18,6 +17,7 @@ import {
   BoardContextType,
   ResultDataType,
 } from "src/types/board";
+import { shipTypes } from "src/constants/shipsData";
 
 const Container = styled.div`
   display: flex;
@@ -32,9 +32,12 @@ const Container = styled.div`
     margin: 20px auto;
   }
 `;
-const initialBoardData = getBoardData();
-const initialResultData = getInitialResultData();
-//TODO: use random board data to final stage
+
+// get board data with fixed layout and ship types
+// const initialBoardData = getBoardData();
+
+const initialResultData = getInitialResultData(shipTypes);
+
 const randomInitailLayout = getBoardDataWithRandomLayout();
 
 export const BoardContext = createContext<BoardContextType | null>(null);
@@ -44,13 +47,13 @@ type Props = {
 };
 const Game: FunctionComponent<Props> = ({ onClickCancel }) => {
   const [boardValues, setBoardValues] =
-    useState<BoardValueType[][]>(initialBoardData);
+    useState<BoardValueType[][]>(randomInitailLayout);
   const [resultData, setResultData] =
     useState<ResultDataType[]>(initialResultData);
   const [score, setScore] = useState(0);
 
   const handleGameCompletion = () => {
-    setBoardValues(initialBoardData);
+    setBoardValues(randomInitailLayout);
     setResultData(initialResultData);
     setScore(0);
   };

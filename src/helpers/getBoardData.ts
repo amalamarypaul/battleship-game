@@ -1,5 +1,10 @@
 import { layout, BOARD_SIZE, shipTypes } from "src/constants/shipsData";
-import { BoardValueType, ResultDataType, ShipType } from "src/types/board";
+import {
+  BoardValueType,
+  ResultDataType,
+  ShipType,
+  Ships,
+} from "src/types/board";
 
 //function to get matrix representation of the grid
 export const getBoardData = () => {
@@ -33,15 +38,29 @@ export const getBoardData = () => {
 };
 
 //function to get result data initial state
-export const getInitialResultData = () => {
+
+export const getInitialResultData = (shipTypes: Ships) => {
   const resultData: ResultDataType[] = [];
   for (const [key, value] of Object.entries(shipTypes)) {
-    resultData.push({
-      ship: key,
-      isSunk: false,
-      destroyedCount: 0,
-      size: value.size,
-    });
+    if (value.count > 1) {
+      resultData.push(
+        ...Array(value.count)
+          .fill({})
+          .map((item, index) => ({
+            ship: key + (index + 1),
+            isSunk: false,
+            destroyedCount: 0,
+            size: value.size,
+          }))
+      );
+    } else {
+      resultData.push({
+        ship: key,
+        isSunk: false,
+        destroyedCount: 0,
+        size: value.size,
+      });
+    }
   }
 
   return resultData;
@@ -55,7 +74,15 @@ const generateBoardData = (size: number) =>
 const getAllShips = () => {
   const ships: ShipType[] = [];
   for (const [key, value] of Object.entries(shipTypes)) {
-    ships.push(...Array(value.count).fill({ name: key, size: value.size }));
+    if (value.count > 1) {
+      ships.push(
+        ...Array(value.count)
+          .fill({})
+          .map((item, index) => ({ name: key + (index + 1), size: value.size }))
+      );
+    } else {
+      ships.push({ name: key, size: value.size });
+    }
   }
   return ships;
 };
