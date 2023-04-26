@@ -66,12 +66,12 @@ export const getInitialResultData = (shipTypes: Ships) => {
   return resultData;
 };
 
-const generateBoardData = (size: number) =>
+export const generateBoardData = (size: number) =>
   Array(size)
     .fill("0")
     .map((item) => Array(size).fill({ isFired: false }));
 
-const getAllShips = () => {
+export const getAllShips = (shipTypes: Ships) => {
   const ships: ShipType[] = [];
   for (const [key, value] of Object.entries(shipTypes)) {
     if (value.count > 1) {
@@ -87,62 +87,78 @@ const getAllShips = () => {
   return ships;
 };
 
-const getRandomIndex = (size: number) =>
+export const getRandomIndex = (size: number) =>
   Math.floor(Math.random() * Math.floor(size));
 
-const getPossibleDirection = (
+export const getPossibleDirection = (
   rowindex: number,
   colindex: number,
   ship: ShipType,
   board: BoardValueType[][]
 ) => {
   let isValid = false;
-  let directionValue = Math.floor(Math.random() * 4) + 1;
   let direction = "";
+  let impossibleDirectionValue = 0;
   //Let keep direction values mapping to  1-->up, 2-->right, 3-->down, 4-->left
+  for (let directionValue = 1; directionValue <= 4; directionValue++) {
+    for (let i = 0; i < ship.size; i++) {
+      if (directionValue === 1) {
+        //up
+        if (rowindex - i < 0 || board[rowindex - i][colindex].ship) {
+          impossibleDirectionValue = directionValue;
+          break;
+        }
+      } else if (directionValue === 2) {
+        //right
+        if (
+          colindex + i >= board.length ||
+          board[rowindex][colindex + i].ship
+        ) {
+          impossibleDirectionValue = directionValue;
+          break;
+        }
+      } else if (directionValue === 3) {
+        //down
 
-  for (let i = 0; i < ship.size; i++) {
-    if (directionValue === 1) {
-      //up
-      if (rowindex - i < 0 || board[rowindex - i][colindex].ship) {
-        return { isValid, direction };
-      }
-    } else if (directionValue === 2) {
-      //right
-      if (colindex + i >= board.length || board[rowindex][colindex + i].ship) {
-        return { isValid, direction };
-      }
-    } else if (directionValue === 3) {
-      //down
-      if (rowindex + i >= board.length || board[rowindex + i][colindex].ship) {
-        return { isValid, direction };
-      }
-    } else {
-      //left
-      if (colindex - i < 0 || board[rowindex][colindex - i].ship) {
-        return { isValid, direction };
+        if (
+          rowindex + i >= board.length ||
+          board[rowindex + i][colindex].ship
+        ) {
+          impossibleDirectionValue = directionValue;
+          break;
+        }
+      } else {
+        //left
+        if (colindex - i < 0 || board[rowindex][colindex - i].ship) {
+          impossibleDirectionValue = directionValue;
+        }
       }
     }
+    if (
+      impossibleDirectionValue !== 0 &&
+      impossibleDirectionValue !== directionValue
+    ) {
+      direction =
+        directionValue === 1
+          ? "up"
+          : directionValue === 2
+          ? "right"
+          : directionValue === 3
+          ? "down"
+          : "left";
+      isValid = true;
+      break;
+    }
   }
-  isValid = true;
-  direction =
-    directionValue === 1
-      ? "up"
-      : directionValue === 2
-      ? "right"
-      : directionValue === 3
-      ? "down"
-      : "left";
   return { isValid, direction };
 };
-const placeShipInPosition = (
+export const placeShipInPosition = (
   rowindex: number,
   colindex: number,
   ship: ShipType,
   board: BoardValueType[][],
   direction: string
 ) => {
-  // const board = tempboardData.map((rowData) => rowData.slice());
   for (let i = 0; i < ship.size; i++) {
     if (direction === "up") {
       //up
@@ -207,7 +223,7 @@ const generateRandomPosition = (
 export const getBoardDataWithRandomLayout = () => {
   let boardData: BoardValueType[][] = generateBoardData(BOARD_SIZE);
 
-  const shipList = getAllShips();
+  const shipList = getAllShips(shipTypes);
 
   shipList.forEach((ship) => {
     const tempboardData = boardData.map((rowData) => rowData.slice());
