@@ -39,7 +39,7 @@ export const getBoardData = () => {
 
 //function to get result data initial state
 
-export const getInitialResultData = (shipTypes: Ships) => {
+export const getResultData = (shipTypes: Ships) => {
   const resultData: ResultDataType[] = [];
   for (const [key, value] of Object.entries(shipTypes)) {
     if (value.count > 1) {
@@ -190,7 +190,7 @@ export const placeShipInPosition = (
   return board;
 };
 
-const generateRandomPosition = (
+export const generateRandomPosition = (
   board: BoardValueType[][],
   boardSize: number,
   ship: ShipType
@@ -220,14 +220,21 @@ const generateRandomPosition = (
   return updatedBoard;
 };
 
-export const getBoardDataWithRandomLayout = () => {
-  let boardData: BoardValueType[][] = generateBoardData(BOARD_SIZE);
+export const getBoardDataWithRandomLayout = (
+  size: number,
+  shipTypes: Ships
+) => {
+  let boardData: BoardValueType[][] = generateBoardData(size);
 
   const shipList = getAllShips(shipTypes);
 
   shipList.forEach((ship) => {
     const tempboardData = boardData.map((rowData) => rowData.slice());
-    boardData = generateRandomPosition(tempboardData, BOARD_SIZE, ship);
+    boardData = generateRandomPosition(tempboardData, size, ship);
   });
   return boardData;
 };
+
+export const getInitialRandomBoardData = () =>
+  getBoardDataWithRandomLayout(BOARD_SIZE, shipTypes);
+export const getInitialResultData = () => getResultData(shipTypes);

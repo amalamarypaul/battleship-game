@@ -1,20 +1,23 @@
 import { cleanup } from "@testing-library/react";
 import {
-  getInitialResultData,
   getAllShips,
   getRandomIndex,
   generateBoardData,
   getPossibleDirection,
   placeShipInPosition,
+  getResultData,
+  generateRandomPosition,
+  getBoardDataWithRandomLayout,
 } from "./getBoardData";
+import { BoardValueType, Ships } from "src/types/board";
 
 describe("helper functions for board", () => {
   const shipsList = {
     carrier: { size: 5, count: 1 },
     battleship: { size: 4, count: 2 },
   };
-  describe("getInitialResultData", () => {
-    const results = getInitialResultData(shipsList);
+  describe("getResultData", () => {
+    const results = getResultData(shipsList);
     it("should return array of all ships", () => {
       expect(results.length).toBe(3);
     });
@@ -129,6 +132,53 @@ describe("helper functions for board", () => {
       expect(Array.isArray(result)).toBeTruthy();
       expect(result[0][1]).toStrictEqual({ isFired: false, ship: "carrier1" });
       expect(result[1][1]).toStrictEqual({ isFired: false, ship: "carrier1" });
+    });
+  });
+  describe("generateRandomPosition", () => {
+    it("should return a board with given ship", () => {
+      const board = [
+        [{ isFired: false }, { isFired: false }],
+        [{ isFired: false }, { isFired: false }],
+      ];
+      const result = generateRandomPosition(board, 2, {
+        name: "carrier1",
+        size: 2,
+      });
+
+      expect(Array.isArray(result)).toBeTruthy();
+      const shipData: BoardValueType[] = [];
+      result.forEach((row) => {
+        row.forEach((col) => {
+          if (col.ship) {
+            shipData.push(col);
+          }
+        });
+      });
+      expect(shipData.length).toBe(2);
+      expect(shipData[0]).toStrictEqual({ isFired: false, ship: "carrier1" });
+    });
+  });
+  describe("getBoardDataWithRandomLayout", () => {
+    it("should return a board with given ships", () => {
+      const shipTypes: Ships = {
+        carrier: { size: 2, count: 1 },
+        cruiser: { size: 3, count: 1 },
+      };
+      const result = getBoardDataWithRandomLayout(4, shipTypes);
+
+      expect(Array.isArray(result)).toBeTruthy();
+
+      const shipData: BoardValueType[] = [];
+      result.forEach((row) => {
+        row.forEach((col) => {
+          if (col.ship) {
+            shipData.push(col);
+          }
+        });
+      });
+      expect(shipData.length).toBe(5);
+      expect(shipData.filter((data) => data.ship === "carrier").length).toBe(2);
+      expect(shipData.filter((data) => data.ship === "cruiser").length).toBe(3);
     });
   });
 });

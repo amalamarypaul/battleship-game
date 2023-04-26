@@ -9,15 +9,14 @@ import { Board, Modal, ResultSection } from "src/components";
 import styled from "styled-components";
 import { devices } from "src/constants/devices";
 import {
-  getBoardDataWithRandomLayout,
   getInitialResultData,
+  getInitialRandomBoardData,
 } from "src/helpers/getBoardData";
 import {
   BoardValueType,
   BoardContextType,
   ResultDataType,
 } from "src/types/board";
-import { shipTypes } from "src/constants/shipsData";
 
 const Container = styled.div`
   display: flex;
@@ -36,9 +35,9 @@ const Container = styled.div`
 // get board data with fixed layout and ship types
 // const initialBoardData = getBoardData();
 
-const initialResultData = getInitialResultData(shipTypes);
+const initialResultData = getInitialResultData();
 
-const randomInitailLayout = getBoardDataWithRandomLayout();
+const randomInitailLayout = getInitialRandomBoardData();
 
 export const BoardContext = createContext<BoardContextType | null>(null);
 
@@ -53,7 +52,7 @@ const Game: FunctionComponent<Props> = ({ onClickCancel }) => {
   const [score, setScore] = useState(0);
 
   const handleGameCompletion = () => {
-    setBoardValues(randomInitailLayout);
+    setBoardValues(getInitialRandomBoardData());
     setResultData(initialResultData);
     setScore(0);
   };
