@@ -14,7 +14,7 @@ const Container = styled.div<{ $shouldMargin?: boolean }>`
 function App() {
   const [showStartPage, setShowStartPage] = useState(true);
   return (
-    <Container $shouldMargin={!showStartPage}>
+    <Container $shouldMargin={!showStartPage} data-testid="battleship-game">
       {showStartPage ? (
         <StartPage onClickStart={() => setShowStartPage(false)}></StartPage>
       ) : (

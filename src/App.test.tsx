@@ -4,7 +4,7 @@ import App from "./App";
 
 test("renders battleship app", () => {
   render(<App />);
-  const linkElement = screen.getByTestId("battleship");
+  const linkElement = screen.getByTestId("battleship-game");
 
   expect(linkElement).toBeInTheDocument();
 });
