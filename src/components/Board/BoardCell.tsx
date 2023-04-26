@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { devices } from "src/constants/devices";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { BoardValueType } from "src/types/board";
 import { useBoardContext } from "src/hooks/useBoardContext";
 import { Hit, Miss } from "src/assets";
@@ -22,9 +22,21 @@ const Tile = styled.div`
     height: 60px;
   }
 `;
+const animation = keyframes`
+
+  from {
+    scale:0;
+    opacity:0;
+  }
+  to {
+    scale:1;
+    opacity:1;
+  }
+`;
 const HitMark = styled.img`
   width: 20px;
   height: 20px;
+  animation: ${animation} 100ms ease-in-out;
   @media (${devices.tablet}) {
     width: 40px;
     height: 40px;
@@ -33,6 +45,7 @@ const HitMark = styled.img`
 const MissMark = styled.img`
   width: 20px;
   height: 20px;
+  animation: ${animation} 100ms ease-in-out;
   @media (${devices.tablet}) {
     width: 40px;
     height: 40px;

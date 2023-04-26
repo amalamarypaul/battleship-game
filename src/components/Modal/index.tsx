@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { colors } from "src/constants/colors";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { devices } from "src/constants/devices";
 
 const Container = styled.div`
@@ -15,6 +15,17 @@ const Container = styled.div`
   top: 0;
   left: 0;
 `;
+const animation = keyframes`
+
+  from {
+    scale:0;
+    opacity:0;
+  }
+  to {
+    scale:1;
+    opacity:1;
+  }
+`;
 
 const Content = styled.div`
   background-color: rgba(255, 255, 255, 1);
@@ -24,6 +35,7 @@ const Content = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  animation: ${animation} 400ms ease-in-out;
   @media (${devices.mobile}) {
     width: 80%;
   }
