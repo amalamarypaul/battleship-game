@@ -5,6 +5,7 @@ import {
   getRandomIndex,
   generateBoardData,
   getPossibleDirection,
+  placeShipInPosition,
 } from "./getBoardData";
 
 describe("helper functions for board", () => {
@@ -109,6 +110,25 @@ describe("helper functions for board", () => {
       );
       expect(result2.isValid).toBeTruthy();
       expect(result2.direction).toBe("down");
+    });
+  });
+  describe("placeShipInPosition", () => {
+    it("should return a board with given ship in correct position", () => {
+      const board = [
+        [{ ship: "carrier", isFired: false }, { isFired: false }],
+        [{ ship: "carrier", isFired: false }, { isFired: false }],
+      ];
+      const result = placeShipInPosition(
+        0,
+        1,
+        { name: "carrier1", size: 2 },
+        board,
+        "down"
+      );
+
+      expect(Array.isArray(result)).toBeTruthy();
+      expect(result[0][1]).toStrictEqual({ isFired: false, ship: "carrier1" });
+      expect(result[1][1]).toStrictEqual({ isFired: false, ship: "carrier1" });
     });
   });
 });
